@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Carros</title>
+    <link rel="stylesheet" href="{% static 'carros/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Lista de Carros</h1>
+    </header>
+    {% if user.is_authenticated %}
+        <p>Olá, {{ user.username }}! <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Sair</button>
+        </form></p>
+        <form method="GET" action="{% url 'carro_list' %}">
+            <input type="text" name="q" placeholder="Pesquisar carros" value="{{ request.GET.q }}">
+            <button type="submit">Pesquisar</button>
+        </form>
+        <ul>
+            {% for carro in carros %}
+                <li>{{ carro.nome }} - <a href="{% url 'carro_update' carro.pk %}">Editar</a> - <a href="{% url 'carro_delete' carro.pk %}">Deletar</a></li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'carro_create' %}">Adicionar novo carro</a>
+    {% else %}
+        <p>Você precisa fazer <a href="{% url 'login' %}">login</a> para acessar esta página.</p>
+    {% endif %}
+</body>
+</html>

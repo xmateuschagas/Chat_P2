@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar/Editar Carro</title>
+    <link rel="stylesheet" href="{% static 'carros/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Adicionar/Editar Carro</h1>
+    </header>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar</button>
+    </form>
+    <a href="{% url 'carro_list' %}">Voltar para a lista</a>
+
+    <!-- Adicionando o link de logout -->
+    <a href="{% url 'logout' %}">Sair</a>
+</body>
+</html>
